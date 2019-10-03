@@ -29,7 +29,7 @@ const AuthState = props => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   // Load Tasks
-  const loadTasks = async (page = state.page, perPage = state.perPage) => {
+  const loadTasks = async ([page = state.page, perPage = state.perPage]) => {
     setLoading();
     if (localStorage.token) {
       setAuthToken(localStorage.token);
@@ -74,7 +74,7 @@ const AuthState = props => {
   // Update Page Limit
   const updatePageLimit = limit => {
     dispatch({ type: UPDATE_PAGE_LIMIT, payload: limit });
-    loadTasks(limit);
+    loadTasks([undefined, limit]);
   };
 
   // Set loading

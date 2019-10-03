@@ -15,7 +15,7 @@ const Pagination = () => {
   const { totalTasks, page, perPage, updatePageLimit } = authContext;
 
   useEffect(() => {
-    authContext.loadTasks();
+    authContext.loadTasks([]);
 
     // eslint-disable-next-line
   }, []);

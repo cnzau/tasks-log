@@ -9,7 +9,7 @@ const Home = props => {
   const { tasks, page, loading } = authContext;
 
   useEffect(() => {
-    authContext.loadTasks();
+    authContext.loadTasks([]);
 
     // eslint-disable-next-line
   }, []);
