@@ -1,13 +1,18 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import AuthContext from '../../context/auth/authContext';
 import { Container, Navbar as Navba, Nav } from 'react-bootstrap';
 
 const Navbar = () => {
+  const authContext = useContext(AuthContext);
+
+  const { isAuthenticated, logout } = authContext;
+
   const onLogout = () => {
-    console.log('Logged Out');
+    logout();
   };
 
-  const allLinks = (
+  const authLinks = (
     <Fragment>
       <Nav.Item as='li'>
         <Nav.Link as={Link} to='/'>
@@ -15,13 +20,18 @@ const Navbar = () => {
         </Nav.Link>
       </Nav.Item>
       <Nav.Item as='li'>
-        <Nav.Link as={Link} to='/login'>
-          Login
-        </Nav.Link>
-      </Nav.Item>
-      <Nav.Item as='li'>
         <Nav.Link onClick={onLogout} href='#'>
           Logout
+        </Nav.Link>
+      </Nav.Item>
+    </Fragment>
+  );
+
+  const guestLinks = (
+    <Fragment>
+      <Nav.Item as='li'>
+        <Nav.Link as={Link} to='/login'>
+          Login
         </Nav.Link>
       </Nav.Item>
     </Fragment>
@@ -33,7 +43,7 @@ const Navbar = () => {
         <Container>
           <Navba.Brand href='#'>Tasks Log</Navba.Brand>
           <Nav as='ul' className='justify-content-end' activeKey='/home'>
-            {allLinks}
+            {isAuthenticated ? authLinks : guestLinks}
           </Nav>
         </Container>
       </Navba>

@@ -1,11 +1,20 @@
-import React, { Fragment } from 'react';
+import React, { useContext, useEffect, Fragment } from 'react';
+import AuthContext from '../../context/auth/authContext';
 import { Table } from 'react-bootstrap';
 
 const Home = props => {
+  const authContext = useContext(AuthContext);
+
+  const { tasks } = authContext;
+
+  useEffect(() => {
+    authContext.loadTasks();
+
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <Fragment>
-      <h1>My table data</h1>
-
       <Table striped bordered hover className='my-2' size='sm'>
         <thead>
           <tr>
@@ -18,9 +27,32 @@ const Home = props => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>all data</td>
-          </tr>
+          {tasks.map((task, index) => {
+            const {
+              task_id,
+              customer_first_name,
+              customer_last_name,
+              personnel_first_name,
+              personnel_other_name,
+              status,
+              assigned,
+              completed
+            } = task;
+            return (
+              <tr key={task_id}>
+                <td>{task_id}</td>
+                <td>
+                  {customer_first_name} {customer_last_name}
+                </td>
+                <td>
+                  {personnel_first_name} {personnel_other_name}
+                </td>
+                <td>{status}</td>
+                <td>{assigned}</td>
+                <td>{completed}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </Table>
     </Fragment>
