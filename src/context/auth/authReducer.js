@@ -5,11 +5,17 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
+  UPDATE_PAGE_LIMIT,
   CLEAR_ERRORS
 } from '../types';
 
 export default (state, action) => {
   switch (action.type) {
+    case UPDATE_PAGE_LIMIT:
+      return {
+        ...state,
+        perPage: action.payload
+      };
     case SET_LOADING:
       return {
         ...state,
@@ -20,10 +26,10 @@ export default (state, action) => {
         ...state,
         isAuthenticated: true,
         totalTasks: action.payload.totalTasks,
-        page: action.payload.page,
-        perPage: action.payload.perPage,
+        // page: action.payload.page,
+        // perPage: action.payload.perPage,
         tasks: action.payload.tasks,
-        loading: true
+        loading: false
       };
     case LOGIN_SUCCESS:
       localStorage.setItem('token', action.payload.accessToken);

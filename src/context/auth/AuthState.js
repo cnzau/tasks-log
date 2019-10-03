@@ -7,6 +7,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   TASKS_LOADED,
+  UPDATE_PAGE_LIMIT,
   AUTH_ERROR,
   LOGOUT,
   SET_LOADING,
@@ -28,7 +29,7 @@ const AuthState = props => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   // Load Tasks
-  const loadTasks = async () => {
+  const loadTasks = async (page = state.page, perPage = state.perPage) => {
     setLoading();
     if (localStorage.token) {
       setAuthToken(localStorage.token);
@@ -36,7 +37,7 @@ const AuthState = props => {
     if (state.isAuthenticated) {
       try {
         const res = await API.get(
-          `/tasks/assigned?page=${state.page}&limit=${state.perPage}&order=created&orderMethod=DESC`
+          `/tasks/assigned?page=${page}&limit=${perPage}&order=created&orderMethod=DESC`
         );
         console.log(res.data);
         dispatch({
@@ -70,6 +71,12 @@ const AuthState = props => {
     }
   };
 
+  // Update Page Limit
+  const updatePageLimit = limit => {
+    dispatch({ type: UPDATE_PAGE_LIMIT, payload: limit });
+    loadTasks(limit);
+  };
+
   // Set loading
   const setLoading = () => dispatch({ type: SET_LOADING });
 
@@ -90,6 +97,7 @@ const AuthState = props => {
         tasks: state.tasks,
         error: state.error,
         setLoading,
+        updatePageLimit,
         loadTasks,
         login,
         logout,

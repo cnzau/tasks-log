@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, Fragment } from 'react';
 import AuthContext from '../../context/auth/authContext';
-import { Table } from 'react-bootstrap';
+import { Table, Spinner } from 'react-bootstrap';
+import Pagination from '../layout/Pagination';
 
 const Home = props => {
   const authContext = useContext(AuthContext);
 
-  const { tasks } = authContext;
+  const { tasks, page, loading } = authContext;
 
   useEffect(() => {
     authContext.loadTasks();
@@ -55,6 +56,10 @@ const Home = props => {
           })}
         </tbody>
       </Table>
+      <div className='container text-center'>
+        {loading && <Spinner animation='grow' variant='secondary' />}
+      </div>
+      <Pagination />
     </Fragment>
   );
 };
