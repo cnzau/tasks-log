@@ -6,6 +6,7 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   UPDATE_PAGE_LIMIT,
+  UPDATE_PAGE,
   CLEAR_ERRORS
 } from '../types';
 
@@ -15,6 +16,11 @@ export default (state, action) => {
       return {
         ...state,
         perPage: action.payload
+      };
+    case UPDATE_PAGE:
+      return {
+        ...state,
+        page: action.payload
       };
     case SET_LOADING:
       return {

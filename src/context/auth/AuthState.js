@@ -8,6 +8,7 @@ import {
   LOGIN_FAIL,
   TASKS_LOADED,
   UPDATE_PAGE_LIMIT,
+  UPDATE_PAGE,
   AUTH_ERROR,
   LOGOUT,
   SET_LOADING,
@@ -60,8 +61,6 @@ const AuthState = props => {
         type: LOGIN_SUCCESS,
         payload: res.data
       });
-
-      // loadTasks();
     } catch (err) {
       // console.log(err.response);
       dispatch({
@@ -75,6 +74,12 @@ const AuthState = props => {
   const updatePageLimit = limit => {
     dispatch({ type: UPDATE_PAGE_LIMIT, payload: limit });
     loadTasks([undefined, limit]);
+  };
+
+  // Update Page
+  const updatePage = pg => {
+    dispatch({ type: UPDATE_PAGE, payload: pg });
+    loadTasks([pg, undefined]);
   };
 
   // Set loading
@@ -98,6 +103,7 @@ const AuthState = props => {
         error: state.error,
         setLoading,
         updatePageLimit,
+        updatePage,
         loadTasks,
         login,
         logout,

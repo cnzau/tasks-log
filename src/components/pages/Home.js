@@ -6,7 +6,7 @@ import Pagination from '../layout/Pagination';
 const Home = props => {
   const authContext = useContext(AuthContext);
 
-  const { tasks, page, loading } = authContext;
+  const { tasks, loading } = authContext;
 
   useEffect(() => {
     authContext.loadTasks([]);
